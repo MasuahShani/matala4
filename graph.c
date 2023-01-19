@@ -158,7 +158,7 @@ void deleteEdege(pnode node,int val)
 
 void deleteEdeges(pnode* start, int val)
 {
-    if(!start)
+    if(!start || !(*start))
     {
         return;
     }
@@ -175,7 +175,7 @@ void deleteEdeges(pnode* start, int val)
 
 pnode* deleteNode(pnode* start,int* size,int val)
 {
-    if(!start)
+    if(!start || !(*start))
     {
         return NULL;
     }
@@ -184,6 +184,26 @@ pnode* deleteNode(pnode* start,int* size,int val)
     {
         pnode temp=*start;
         start=&((*start)->next);
+      if((temp->edges))
+      {
+
+      
+       pedge cur_ed=*(temp->edges);
+        while(cur_ed->next)
+        {
+        pedge temp2=cur_ed;
+        cur_ed=cur_ed->next;
+        free(temp2);
+        }
+   
+        free(cur_ed);
+    
+    
+        free((temp->edges));
+    
+      }
+    
+
         free(temp);
         (*size)--;
         return start;
@@ -207,6 +227,23 @@ pnode* deleteNode(pnode* start,int* size,int val)
     pnode temp= cur->next;
     cur->next=temp->next;
 
+    if((temp->edges))
+    {
+    
+   
+    pedge cur_ed=*(temp->edges);
+    while(cur_ed->next)
+    {
+        pedge temp2=cur_ed;
+        cur_ed=cur_ed->next;
+        free(temp2);
+    }
+   
+        free(cur_ed);
+   
+        free(temp->edges);
+    }
+
     free(temp);
     deleteEdeges(start,val);
     return start;
@@ -214,7 +251,7 @@ pnode* deleteNode(pnode* start,int* size,int val)
 
 void deleteGraph(pnode* start,int* size)
 {
-    if(!start)
+    if(!start || !(*start))
     {
         return;
     }
@@ -224,10 +261,7 @@ void deleteGraph(pnode* start,int* size)
        
         int val=(*start)->node_num;
         start=deleteNode(start,size,val);
-        if(start==NULL)
-        {
-            return;
-        }
+       
     }
 
 }
@@ -277,7 +311,7 @@ void startGraph(int* size, pnode* start)// כתובת של הגודל וכתוב
         scanf("%c",&c);
     }
     *start=newNode(num);
-    if(!start)
+    if(!start ||!(*start))
     {
         return;
     }
@@ -288,7 +322,7 @@ void startGraph(int* size, pnode* start)// כתובת של הגודל וכתוב
 }
 pnode* insertNode(int* size,pnode* start)
 {
-    if(!start || !*start)
+    if(!start || !(*start))
     {
         return NULL;
     }
@@ -319,6 +353,26 @@ pnode* insertNode(int* size,pnode* start)
             pnode temp=*start;
             node->next=(*start)->next;
             start=&node;
+
+                if((temp->edges))
+        {
+
+        
+        pedge cur_ed=*(temp->edges);
+        while(cur_ed->next)
+        {
+            pedge temp2=cur_ed;
+            cur_ed=cur_ed->next;
+            free(temp2);
+        }
+    
+            free(cur_ed);
+        
+        
+            free(temp->edges);
+        
+        }
+
             free(temp);
 
         }
@@ -332,6 +386,27 @@ pnode* insertNode(int* size,pnode* start)
         pnode temp=cur->next;
         cur->next=node;
         node->next=temp->next;
+
+        if((temp->edges))
+      {
+
+      
+       pedge cur_ed=*(temp->edges);
+    while(cur_ed->next)
+    {
+        pedge temp2=cur_ed;
+        cur_ed=cur_ed->next;
+        free(temp2);
+    }
+   
+        free(cur_ed);
+    
+    
+        free(temp->edges);
+    
+      }
+
+
         free(temp);
     }
     return start;
@@ -478,7 +553,7 @@ float T(int st, int* nodes,int k,int left, int* prevs, pnode* start, int size)
 
 float TSP(pnode* start, int size)
 {
-    if(!start)
+    if(!start ||!(*start))
     {
         return -1;
     }

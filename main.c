@@ -52,10 +52,11 @@ int main()
         {
             printf("TCP shortest path: %d\n",(int)TSP(add_start,size));
         }
-       if(let=='\n')
-       {
-           break;
-       }
+        if(let=='\n')
+        {
+           deleteGraph(add_start,&size);
+            break;
+        }
         
        
    }
