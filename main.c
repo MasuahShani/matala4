@@ -52,6 +52,10 @@ int main()
         {
             printf("TCP shortest path: %d\n",(int)TSP(add_start,size));
         }
+       if(let=='\n')
+       {
+           break;
+       }
         
        
    }
